@@ -1,4 +1,4 @@
-class FiendshipRequestsController < ApplicationController
+class FriendshipRequestsController < ApplicationController
   before_action :set_friendship_request, except: [:index, :create]
 
   def create
