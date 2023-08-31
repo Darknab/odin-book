@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :fiendship_requests
   devise_for :users
 
-  resources :users, only: [:edit, :show]
+  resources :users, only: [:edit, :update, :show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

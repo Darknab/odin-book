@@ -1,0 +1,15 @@
+<h1> Edit Profile </h1>
+
+<%= form_with model: @user do |form|%>
+  <div>
+    <%= form.label :name, class: "form-label"%>
+    <%= form.text_field :name, class: "form-control", placeholder: "Your name here"%>
+  </div>
+
+  <div>
+    <%= form.label :bio, class: "form-label"%>
+    <%= form.text_area :bio, class: "form-control", placeholder: "Tell us about yourself!"%>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+<% end %>
