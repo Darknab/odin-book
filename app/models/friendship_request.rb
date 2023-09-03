@@ -1,4 +1,4 @@
-class FiendshipRequest < ApplicationRecord
+class FriendshipRequest < ApplicationRecord
 validate :not_self
 validate :not_friends
 validate :not_pending
@@ -14,7 +14,7 @@ validate :not_pending
   private
 
   def not_self
-    errors.add(:friend, "caan't be equal to user") if user == friend
+    errors.add(:friend, "can't be equal to user") if user == friend
   end
 
   def not_friends
@@ -22,6 +22,6 @@ validate :not_pending
   end
 
   def not_pending
-    errors.add(:friend, 'already requested friendship') if friend.pending-friendships.include?(user)
+    errors.add(:friend, 'already requested friendship') if friend.pending_friendships.include?(user)
   end
 end
