@@ -3,6 +3,7 @@ class FriendshipsController < ApplicationController
 
   def index
     @friends = current_user.friends
+    @not_friends = User.not_friends(current_user)
   end
 
   def destroy
