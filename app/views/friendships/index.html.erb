@@ -1,0 +1,27 @@
+<h2> Friends: </h2>
+
+<% if @friends.any?  %>
+  <% @friends.each do |friend|%>
+    <div class="card">
+      <div class="card-body">
+        <%= link_to friend.name || friend.email, user_path(friend)%>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>Your friendlist is empty</p>
+<% end %>
+
+<h2>You might know:</h2>
+
+<% if @not_friends.any? %>
+  <% @not_friends.each do |user|%>
+    <div class="card">
+      <div class="card-body">
+        <%= link_to user.name || user.email, user_path(user)%>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>Incredible! it seems that everybody around are already your friends!</p>
+<% end %>

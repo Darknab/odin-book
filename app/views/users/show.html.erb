@@ -6,7 +6,9 @@
     <h4> Bio: </h4>
     <p> <%= @user.bio %> </p>
   <% else %>
+    <% if @user == current_user %>
     <p><strong>Your profile isn't complete, you should add a name and bio
         <%= link_to "here", edit_user_path(current_user)%></strong></p>
+    <% end %>
   <% end %>
 </div>

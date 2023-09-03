@@ -4,7 +4,7 @@
       <% @incoming.each do |request|%>
         <div class="card">
           <div class="card-body">
-            <%= link_to invitation.user.name, user_path(invitation.user.id) %>
+            <%= link_to invitation.user.name ||invitation.user.email , user_path(invitation.user.id) %>
             <%= button_to "Accept", update_path(request)%>
             <%= button_to "Decline", destroy_path(request)%>
           </div>
@@ -19,7 +19,7 @@
       <% @outgoing.each do |request| %>
         <div class="card">
           <div class="card-body">
-            <% link_to invistation.friend.name, user_path(invitation.friend.id)%>
+            <% link_to invitation.friend.name || invitation.friend.email, user_path(invitation.friend.id)%>
           </div>
         </div>
       <% end %>
