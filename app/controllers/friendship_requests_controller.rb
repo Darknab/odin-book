@@ -13,7 +13,7 @@ class FriendshipRequestsController < ApplicationController
   end
 
   def index
-    @incoming = FiendshipRequest.where(friend: current_user)
+    @incoming = FriendshipRequest.where(friend: current_user)
     @outgoing = current_user.friendship_requests
   end
 

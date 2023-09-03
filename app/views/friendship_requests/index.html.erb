@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Friend requests</h2>
+    <% if @incoming.any? %>
+      <% @incoming.each do |request|%>
+        <div class="card">
+          <div class="card-body">
+            <%= link_to invitation.user.name, user_path(invitation.user.id) %>
+            <%= button_to "Accept", update_path(request)%>
+            <%= button_to "Decline", destroy_path(request)%>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p> You have no incoming frindship requests for the moment </p>
+    <% end %>
+
+  <h2> pending requests </h2>
+    <% if @outgoing.any? %>
+      <% @outgoing.each do |request| %>
+        <div class="card">
+          <div class="card-body">
+            <% link_to invistation.friend.name, user_path(invitation.friend.id)%>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p> You have no pending invitations for the moment </p>
+    <% end %>
+</div>
