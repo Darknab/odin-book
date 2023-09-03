@@ -1,6 +1,6 @@
 require "test_helper"
 
-class FriendsControllerTest < ActionDispatch::IntegrationTest
+class FriendshipsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get friends_index_url
     assert_response :success
