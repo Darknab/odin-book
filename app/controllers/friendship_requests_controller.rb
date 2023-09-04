@@ -20,11 +20,13 @@ class FriendshipRequestsController < ApplicationController
   def update
     @friendship_request.accept
     head :no_content
+    redirect_to user_friendship_requests_path(current_user)
   end
 
   def destroy
     @friendship_request.destroy
     head :no_content
+    redirect_to user_friendship_requests_path(current_user)
   end
 
   private
