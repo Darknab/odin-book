@@ -19,6 +19,7 @@
     <div class="card">
       <div class="card-body">
         <%= link_to user.name || user.email, user_path(user)%>
+        <%= button_to "Add friend", {:controller => "friendship_requests", :action => "create", :friend_id => user.id }, :method => :post %>
       </div>
     </div>
   <% end %>

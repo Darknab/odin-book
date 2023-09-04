@@ -3,10 +3,10 @@ class FriendshipRequestsController < ApplicationController
 
   def create
     friend = User.find(params[:friend_id])
-    @friendship_request = current_user.friend_requests.new(friend: friend)
+    @friendship_request = current_user.friendship_requests.new(friend: friend)
 
     if @friendship_request.save
-      render :show, status: :created, location: @friendship_request
+      render :show, status: :created, location: current_user
     else
       render json: @friendship_request.errors, status: :unprocessable_entity
     end
@@ -30,6 +30,6 @@ class FriendshipRequestsController < ApplicationController
   private
 
   def set_friendship_request
-    @friendship_request = FiendshipRequest.find(params[:id])
+    @friendship_request = FriendshipRequest.find(params[:id])
   end
 end
