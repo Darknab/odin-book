@@ -8,6 +8,7 @@ validate :not_pending
 
   def accept
     user.friends << friend
+    friend.friends << user
     destroy
   end
 

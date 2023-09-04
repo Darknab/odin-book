@@ -5,8 +5,8 @@
         <div class="card">
           <div class="card-body">
             <%= link_to request.user.name ||request.user.email , user_path(request.user.id) %>
-            <%= button_to "Accept", update_path(request)%>
-            <%= button_to "Decline", destroy_path(request)%>
+            <%= button_to "Accept", { :controller => "friendship_requests", :action => "update", :id => request.id }, :method => :put %>
+            <%= button_to "Decline", { :controller => "friendship_requests", :action => "destroy", :id => request.id }, :method => :delete %>
           </div>
         </div>
       <% end %>

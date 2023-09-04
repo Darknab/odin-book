@@ -8,6 +8,7 @@ class FriendshipsController < ApplicationController
 
   def destroy
     current_user.remove_friend(@friend)
+    @friend.remove_friend(current_user)
     head :no_content
   end
 
