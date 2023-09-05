@@ -6,7 +6,7 @@ class FriendshipRequestsController < ApplicationController
     @friendship_request = current_user.friendship_requests.new(friend: friend)
 
     if @friendship_request.save
-      render :show, status: :created, location: current_user
+      redirect_to user_friendship_requests_path(current_user)
     else
       render json: @friendship_request.errors, status: :unprocessable_entity
     end
@@ -19,13 +19,13 @@ class FriendshipRequestsController < ApplicationController
 
   def update
     @friendship_request.accept
-    head :no_content
+    # head :no_content
     redirect_to user_friendship_requests_path(current_user)
   end
 
   def destroy
     @friendship_request.destroy
-    head :no_content
+    # head :no_content
     redirect_to user_friendship_requests_path(current_user)
   end
 

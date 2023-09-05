@@ -5,6 +5,7 @@
     <div class="card">
       <div class="card-body">
         <%= link_to friend.name || friend.email, user_path(friend)%>
+        <%= button_to "Remove friend", user_friendship_path(current_user.id, friend.id), method: :delete %>
       </div>
     </div>
   <% end %>
