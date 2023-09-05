@@ -16,7 +16,4 @@ class User < ApplicationRecord
 
   scope :not_friends, -> (user) { where.not(id: user.friends).where.not(id: user.friendship_requests).where.not(id: user.pending_friendships).where.not(id: user) }
 
-  def remove_friend(friend)
-    current_user.friends.destroy(friend)
-  end
 end
