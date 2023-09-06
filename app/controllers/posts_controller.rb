@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
-  before_action :set_post only: [:show, :edit, :update, :destroy]
-  before_action :authorise_user only: [:edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authorise_user, only: [:edit, :update, :destroy]
 
   def new
     @post = current_user.posts.build
@@ -50,6 +50,8 @@ class PostsController < ApplicationController
     unless current_user == @post.user
       flash[:alert] = "You are not authorized to perfeorm this action."
       redirect_to root_path
+    end
+  end
 
   def post_params
     params.require(:post).permit(:body)
