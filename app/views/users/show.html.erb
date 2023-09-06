@@ -11,4 +11,11 @@
         <%= link_to "here", edit_user_path(current_user)%></strong></p>
     <% end %>
   <% end %>
+
+  <% if @user == current_user %>
+    <%= turbo_frame_tag "new_post" do %>
+      <%= link_to "Create a new post", new_post_path, class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
+
 </div>
