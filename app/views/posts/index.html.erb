@@ -1,0 +1,6 @@
+<% @posts.each do |post| %>
+  <p> <strong> <%= post.user.name %> </strong> </p>
+<div>
+  <% post.body %>
+</div>
+<% end %>
