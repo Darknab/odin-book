@@ -1,6 +1,10 @@
 <% @posts.each do |post| %>
   <p> <strong> <%= post.user.name %> </strong> </p>
 <div>
-  <% post.body %>
+  <%= post.body %>
+  <% if current_user == post.user %>
+    <%= link_to "Edit", edit_post_path(post) %>
+    <%= link_to "Delete", destroy_post(post), method: :delete %>
+  <% end %>
 </div>
 <% end %>
