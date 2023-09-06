@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
 
+  has_many :posts
 
   scope :not_friends, -> (user) { where.not(id: user.friends).where.not(id: user.friendship_requests).where.not(id: user.pending_friendships).where.not(id: user) }
 

@@ -6,8 +6,10 @@ Rails.application.routes.draw do
 
   resources :users, only: [:edit, :update, :show] do
     resources :friendship_requests, only: [:create, :index, :update, :destroy]
-    resources :friendships, only: [:index, :destroy ]
+    resources :friendships, only: [:index, :destroy]
   end
+
+  resources :posts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
