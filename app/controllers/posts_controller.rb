@@ -43,7 +43,7 @@ class PostsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(:id)
+    @post = Post.find(params[:id])
   end
 
   def authorise_user
