@@ -7,9 +7,9 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.build(post_params)
+    @post = current_user.posts.build
 
-    if @post.save
+    if @post.save(post_params)
       redirect_to user_path(current_user)
     else
       render :new, status: :unpropcessable_entity
@@ -28,10 +28,10 @@ class PostsController < ApplicationController
   end
 
   def update
-    if @post.save
+    if @post.save(post_params)
       redirect_to user_path(current_user)
     else
-      render :edit, status: :unpropcessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
