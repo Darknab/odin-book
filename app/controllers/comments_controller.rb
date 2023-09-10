@@ -13,12 +13,15 @@ class CommentsController < ApplicationController
 
   def create
     if @parent
-      @comment = @parent.replies.build
+      @comment = @parent.replies.build(comment_params)
+      @comment.parent = @parent
     else
-      @comment = @post.comments.build
+      @comment = @post.comments.build(comment_params)
     end
 
-    if @comment.save(comment_params)
+    @comment.user = current_user
+
+    if @comment.save
       redirect_to post_path(@post)
     else
       render :new, status: :unprocessable_entity
@@ -39,7 +42,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       redirect_to post_path(@post)
     else 
-      render :edit, status :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -52,12 +55,12 @@ class CommentsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find(params[:post_id])
   end
 
   def set_parent
-    if params.includes?(parent_id)
-      @parent = Comment.find(parent_id)
+    if params[:parent_id]
+      @parent = Comment.find(params[:parent_id])
     end
   end
 
