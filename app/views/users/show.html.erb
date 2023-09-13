@@ -18,41 +18,11 @@
     <% end %>
   <% end %>
 
-  <% if @user.posts %>
-    <% @user.posts.each do |post| %>
-      <p> <strong> <%= post.user.name %> </strong> </p>
-      <div>
-        <%= post.body %>
-        <% if current_user == post.user %>
-          <%= link_to "Edit", edit_post_path(post) %>
-          <%= link_to "Delete", @post, data: {
-                        turbo_method: :delete,
-                        turbo_confirm: "Are you sure?" }%>
-        <% end %>
-        <%= turbo_frame_tag "new_comment" do %>
-          <%= link_to "Comment", new_post_comment_path(post), class: "btn btn-sm btn-primary"%>
-        <% end %>
-        <% if post.comments %>
-          <% post.comments.each do |comment| %>
-            <div class="container">
-              <p> <strong> <%= comment.user.name %> </strong> </p>
-              <div>
-                <%= comment.body %>
-                <% if current_user == comment.user %>
-                  <%= link_to "Edit", edit_post_comment_path(post, comment) %>
-                  <%= link_to "Delete", @comment, data: {
-                              turbo_method: :delete,
-                              turbo_confirm: "Are you sure?"} %>
-                <% end %>
-              </div>
-            </div>
-            <%= turbo_frame_tag "new_comment" do %>
-              <%= link_to "reply", new_post_comment_path(post), params: {parent_id: comment.id}, class: "btn btn-primary" %>
-            <% end %>
-          <% end %>
-          
-        <% end %>
-      </div>
-    <% end %>
+
+
+
+<% if @user.posts.any? %>
+  <% @user.posts.each do |post|%>
+    <%= render 'posts/post', post: post %>
   <% end %>
-</div>
+<% end %>

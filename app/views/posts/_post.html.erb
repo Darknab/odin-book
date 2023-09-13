@@ -1,0 +1,14 @@
+<h4> <%= post.user.name %> </h4>
+<%= render 'shared/post_template', post: post%>
+<%= turbo_frame_tag "new_comment" do %>
+  <%= link_to "Comment", new_post_comment_path(post), class: "btn btn-primary" %>
+<% end %>
+
+<% if post.comments.any? %>
+  <div class="container">
+    <h5> Comments </h5>
+    <% post.comments.each do |comment| %>
+      <%= render 'comments/comment', comment: comment %>
+    <% end %>
+  </div>
+<% end %>

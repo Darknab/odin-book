@@ -1,14 +1,5 @@
-<% if @posts %>
-  <% @posts.each do |post| %>
-    <p> <strong> <%= post.user.name %> </strong> </p>
-  <div>
-    <%= post.body %>
-    <% if current_user == post.user %>
-      <%= link_to "Edit", edit_post_path(post) %>
-      <%= link_to "Delete", @post, data: {
-                        turbo_method: :delete,
-                        turbo_confirm: "Are you sure?" }%>
-    <% end %>
-  </div>
+<% if @posts.any? %>
+  <% @posts.each do |post|%>
+    <%= render 'posts/post', post: post %>
   <% end %>
 <% end %>
