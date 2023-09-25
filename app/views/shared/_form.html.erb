@@ -1,9 +1,12 @@
-<%= form_with model: post do |form| %>
+<%= form_with model: model do |form| %>
   <div>
+    <% if params[:parent_id] %>
+      <%= form.hidden_field :parent_id, value: params[:parent_id] %>
+    <% end %>
     <%= form.label :body %>
     <%= form.text_area :body %>
   </div>
   <div>
-    <%= form.submit %>
+    <%= form.submit "submit" %>
   </div>
 <% end %>
