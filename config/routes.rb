@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   end
 
   resources :posts do
-    resources :comments
+    resources :comments do
+      resources :replies, except: :index
+    end
   end
  
 

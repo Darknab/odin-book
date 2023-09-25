@@ -1,0 +1,10 @@
+<h6> <%= reply.user.name %> </h6>
+<%= turbo_frame_tag "edit_reply" do %>
+    <%= reply.body %>
+    <% if current_user == reply.user %>
+      <%= link_to "Edit", edit_post_comment_reply_path(reply, comment_id: reply.parent.id) %>
+      <%= link_to "Delete", @reply, data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?" }%>
+    <% end %>
+  <% end %>

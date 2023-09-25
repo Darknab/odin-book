@@ -1,0 +1,23 @@
+<%= turbo_frame_tag "new_reply" do %>
+  <% if @reply.errors.any? %>
+    <div id="error_explanation">
+      <h6><%= pluralize(@reply.errors.count, "error") %> prohibited this article from being saved:</h6>
+
+      <ul>
+        <% @reply.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_with model: [@post, @parent], url: post_comment_replies_path(@post, @comment, comment_id: params[:comment_id]), method: :post do |form| %>
+    <div>
+      <%= form.hidden_field :parent_id, value: params[:parent_id] %>
+      <%= form.label :body %>
+      <%= form.text_area :body %>
+    </div>
+    <div>
+      <%= form.submit "submit" %>
+    </div>
+  <% end %>
+<% end %>
