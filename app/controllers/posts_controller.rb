@@ -7,10 +7,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.build
+    @post = current_user.posts.build(post_params)
 
-    if @post.save(post_params)
-      redirect_to user_path(current_user)
+    if @post.save
+      redirect_to @post
     else
       render :new, status: :unpropcessable_entity
     end
@@ -28,8 +28,8 @@ class PostsController < ApplicationController
   end
 
   def update
-    if @post.save(post_params)
-      redirect_to user_path(current_user)
+    if @post.update(post_params)
+      redirect_to @post
     else
       render :edit, status: :unprocessable_entity
     end
@@ -49,7 +49,7 @@ class PostsController < ApplicationController
   def authorise_user
     unless current_user == @post.user
       flash[:alert] = "You are not authorized to perfeorm this action."
-      redirect_to root_path
+      redirect_to user_path(current_user)
     end
   end
 
