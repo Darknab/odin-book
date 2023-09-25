@@ -1,3 +1,3 @@
-<%= turbo "edit-post" %>
-  <%= render "shared/form", post: @post%>
+<%= turbo_frame_tag "edit_post" do %>
+  <%= render "shared/form", model: @post %>
 <% end %>
