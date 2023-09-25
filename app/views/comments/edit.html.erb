@@ -1,11 +1,3 @@
 <%= turbo_frame_tag "edit_comment" do %>
-  <%= form_with model: @comment, url: post_comments_path do |form| %>
-    <div>
-      <%= form.label :body %>
-      <%= form.text_area :body %>
-    </div>
-    <div>
-      <%= form.submit %>
-    </div>
-  <% end %>
+  <%= render partial: 'shared/form', locals: {model: [@comment.post, @comment], parent_id: nil} %>
 <% end %>
