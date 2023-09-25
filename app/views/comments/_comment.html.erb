@@ -1,15 +1,22 @@
 <h6> <%= comment.user.name %> </h6>
-<%= render 'shared/post_template', post: comment %>
-<%= turbo_frame_tag "new_comment" do %>
-  <%= link_to "reply", new_post_comment_path(comment), params: {parent_id: comment.id}, class: "btn btn-primary" %>
+<%= turbo_frame_tag "edit_comment" do %>
+    <%= comment.body %>
+    <% if current_user == comment.user %>
+      <%= link_to "Edit", edit_post_comment_path(comment) %>
+      <%= link_to "Delete", @comment, data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?" }%>
+    <% end %>
+  <% end %>
+<%= turbo_frame_tag "new_reply" do %>
+  <%= link_to "reply", new_post_comment_reply_path(comment.post, comment, parent_id: comment.id), class: "btn btn-primary" %>
 <% end %>
 
 <% if comment.replies.any? %>
   <div class="container">
     <h6> Replies </h6>
-    <%= render 'comments/replies', collection: comment.replies, as: :reply %>
     <% comment.replies.each do |reply| %>
-      <%= render 'comments/comment', comment: reply %>
+      <%= render 'replies/reply', reply: reply %>
     <% end %>
   </div>
 <% end %>

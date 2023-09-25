@@ -1,5 +1,13 @@
 <h4> <%= post.user.name %> </h4>
-<%= render 'shared/post_template', post: post%>
+<%= turbo_frame_tag "edit_post" do %>
+  <%= post.body %>
+  <% if current_user == post.user %>
+    <%= link_to "Edit", edit_post_path(post) %>
+    <%= link_to "Delete", @post, data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?" }%>
+  <% end %>
+<% end %>
 <%= turbo_frame_tag "new_comment" do %>
   <%= link_to "Comment", new_post_comment_path(post), class: "btn btn-primary" %>
 <% end %>
@@ -8,7 +16,9 @@
   <div class="container">
     <h5> Comments </h5>
     <% post.comments.each do |comment| %>
-      <%= render 'comments/comment', comment: comment %>
+      <% if comment.parent == nil %>
+        <%= render 'comments/comment', comment: comment %>
+      <% end %>
     <% end %>
   </div>
 <% end %>
