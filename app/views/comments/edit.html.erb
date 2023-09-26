@@ -1,3 +1,22 @@
 <%= turbo_frame_tag "edit_comment" do %>
-  <%= render partial: 'shared/form', locals: {model: [@comment.post, @comment], parent_id: nil} %>
+  <% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <h6><%= pluralize(@comment.errors.count, "error") %> prohibited this article from being saved:</h6>
+
+      <ul>
+        <% @comment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_with model: [@post, @comment], url: post_comment_path(@post, @comment, post_id: params[:post_id], id: params[:id]), method: :patch do |form| %>
+    <div>
+      <%= form.label :body %>
+      <%= form.text_area :body %>
+    </div>
+    <div>
+      <%= form.submit "submit" %>
+    </div>
+  <% end %>
 <% end %>

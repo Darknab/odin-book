@@ -2,8 +2,8 @@
 <%= turbo_frame_tag "edit_comment" do %>
     <%= comment.body %>
     <% if current_user == comment.user %>
-      <%= link_to "Edit", edit_post_comment_path(comment) %>
-      <%= link_to "Delete", @comment, data: {
+      <%= link_to "Edit", "/posts/#{comment.post.id}/comments/#{comment.id}/edit" %>
+      <%= link_to "Delete", "/posts/#{comment.post.id}/comments/#{comment.id}", data: {
                             turbo_method: :delete,
                             turbo_confirm: "Are you sure?" }%>
     <% end %>
