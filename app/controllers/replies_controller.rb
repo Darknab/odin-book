@@ -1,4 +1,5 @@
 class RepliesController < ApplicationController
+  before_action :set_post, only: [:new, :create, :edit, :update]
   before_action :set_parent, only: [:new, :create]
   before_action :set_reply, only: [:show, :edit, :update, :destroy]
 
@@ -22,6 +23,7 @@ class RepliesController < ApplicationController
   end
 
   def edit
+    puts "@reply is set to: #{@reply.id}"
   end
 
   def update
@@ -40,14 +42,13 @@ class RepliesController < ApplicationController
 
   private
 
-  def set_parent
-    @parent = Comment.find(params[:comment_id])
+  def set_post
     @post = Post.find(params[:post_id])
   end
-
-  def set_comment
-    @comment = Comment.find(params[:comment_id])
+  def set_parent
+    @parent = Comment.find(params[:comment_id])
   end
+
 
   def set_reply
     @reply = Comment.find(params[:id])
