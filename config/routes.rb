@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       resources :replies, except: :index
     end
   end
+
+  resources :likes, only: [:create, :destroy]
  
 
   # Defines the root path route ("/")
