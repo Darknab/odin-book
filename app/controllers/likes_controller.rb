@@ -2,7 +2,7 @@ class LikesController < ApplicationController
   before_action :find_likable
 
   def create
-    if already_liked?
+    if @likable.liked_by?(current_user)
       flash[:notice] = "Already liked"
     else
       @likable.likes.create(user_id: current_user.id)
@@ -12,7 +12,7 @@ class LikesController < ApplicationController
 
   def destroy
     @like = @likable.likes.find_by(user_id: current_user.id)
-    if already_liked?
+    if @likable.liked_by?(current_user)
       @like.destroy
     else
       flash[:notice] = "Cannot unlike"
@@ -30,10 +30,6 @@ class LikesController < ApplicationController
       @likable = Comment.find(params[:likable_id])
       @post = @likable.post
     end
-  end
-
-  def already_liked?
-    current_user.likes.include?(@likable)
   end
 
 end
