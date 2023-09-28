@@ -7,7 +7,7 @@ class LikesController < ApplicationController
     else
       @likable.likes.create(user_id: current_user.id)
     end
-    redirect_to @post
+    redirect_back(fallback_location: root_path)
   end
 
   def destroy
@@ -17,7 +17,7 @@ class LikesController < ApplicationController
     else
       flash[:notice] = "Cannot unlike"
     end
-    redirect_to @post
+    redirect_back(fallback_location: root_path)
   end
 
   private
