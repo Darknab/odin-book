@@ -9,7 +9,8 @@
     <% end %>
   <% end %>
   <% if comment.liked_by?(current_user) %>
-    <%= button_to "unlike", like_path(likable_id: comment.id, likable_type: "Comment"), method: :delete %>
+    <% like = Like.find_by(user_id: current_user.id, likable_id: comment.id, likable_id: "Comment")%>
+    <%= button_to "unlike", "like/#{like.id}", method: :delete %>
   <% else %>
     <%= button_to "like", likes_path(likable_id: comment.id, likable_type: "Comment"), method: :post %>
   <% end %>
