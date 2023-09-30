@@ -5,7 +5,6 @@ class Post < ApplicationRecord
   has_many :likes, as: :likable
 
   def liked_by?(user)
-    likes = self.likes
-    likes.where(user_id: user.id).exists?
+    Like.find_by(user_id: user.id, likable_id: self.id, likable_id: "post")
   end
 end
