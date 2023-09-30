@@ -17,8 +17,14 @@ class PostsController < ApplicationController
   end
 
   def index
-    @user = User.find(params[:id])
-    @posts = @user.posts.all
+    @user = User.find(current_user.id)
+    post_ids = @user.post_ids
+    if current_user.friends.any?
+      current_user.friends.each do |friend|
+        post_ids << friend.post_ids
+      end
+    end
+    @posts = Post.find(post_ids)
   end
 
   def show
