@@ -1,6 +1,9 @@
 <h6> <%= comment.user.name %> </h6>
 <%= turbo_frame_tag "edit_comment" do %>
     <%= comment.body %>
+    <% if comment.image.attached?%>
+      <%= image_tag comment.image.variant(resize_to_limit: [300, nil]) %>
+    <% end %>
     <% if current_user == comment.user %>
       <%= link_to "Edit", "/posts/#{comment.post.id}/comments/#{comment.id}/edit" %>
       <%= link_to "Delete", "/posts/#{comment.post.id}/comments/#{comment.id}", data: {

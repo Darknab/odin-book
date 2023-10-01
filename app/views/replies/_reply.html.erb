@@ -1,6 +1,9 @@
 <h6> <%= reply.user.name %> </h6>
 <%= turbo_frame_tag "edit_reply" do %>
     <%= reply.body %>
+    <% if reply.image.attached?%>
+      <%= image_tag reply.image.variant(resize_to_limit: [300, nil]) %>
+    <% end %>
     <% if current_user == reply.user %>
       <%= link_to "Edit", "/posts/#{reply.post.id}/comments/#{reply.parent.id}/replies/#{reply.id}/edit" %>
       <%= link_to "Delete", "/posts/#{reply.post.id}/comments/#{reply.parent.id}/replies/#{reply.id}", data: {
