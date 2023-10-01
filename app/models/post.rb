@@ -4,6 +4,8 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, as: :likable
 
+  has_one_attached :image
+
   def liked_by?(user)
     Like.find_by(user_id: user.id, likable_id: self.id, likable_id: "post")
   end
