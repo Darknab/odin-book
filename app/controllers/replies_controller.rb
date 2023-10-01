@@ -55,6 +55,6 @@ class RepliesController < ApplicationController
   end
 
   def reply_params
-    params.require(:comment).permit(:body, :parent_id)
+    params.require(:comment).permit(:body, :parent_id, :image)
   end
 end
