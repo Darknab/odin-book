@@ -3,6 +3,9 @@
 
   <% if @user.name %>
     <p> <%= @user.name %> </p>
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar.variant(resize_to_limit: [200, 200]) %>
+    <% end %>
     <h4> Bio: </h4>
     <p> <%= @user.bio %> </p>
   <% else %>

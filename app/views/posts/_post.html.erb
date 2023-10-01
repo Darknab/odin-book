@@ -1,34 +1,39 @@
-<h4> <%= post.user.name %> </h4>
-<%= turbo_frame_tag "edit_post" do %>
-  <%= post.body %>
-  <% if post.image.attached? %>
-    <%= image_tag post.image.variant(resize_to_limit: [600, nil]) %>
+<div class="container" >
+  <% if post.user.avatar.attached? %>
+    <%= image_tag post.user.avatar.variant(resize_to_limit: [50,50]), class:"rounded-circle" %>
   <% end %>
-  <% if current_user == post.user %>
-    <%= link_to "Edit", edit_post_path(post) %>
-    <%= link_to "Delete", post_path(post), data: {
-                            turbo_method: :delete,
-                            turbo_confirm: "Are you sure?" }%>
-  <% end %>
-<% end %>
-<% if post.liked_by?(current_user) %>
-  <% like = Like.find_by(user_id: current_user.id, likable_id: post.id, likable_type: "Post")%>
-  <%= button_to "unlike", "like/#{like.id}", method: :delete %>
-<% else %>
-  <%= button_to "like", likes_path(likable_id: post.id, likable_type: "Post"), method: :post %>
-<% end %>
-<%= post.likes.count %> <%= post.likes.count == 1 ? "Like" : "Likes" %>
-<%= turbo_frame_tag "new_comment" do %>
-  <%= link_to "Comment", new_post_comment_path(post), class: "btn btn-primary" %>
-<% end %>
-
-<% if post.comments.any? %>
-  <div class="container">
-    <h5> Comments </h5>
-    <% post.comments.each do |comment| %>
-      <% if comment.parent == nil %>
-        <%= render 'comments/comment', comment: comment %>
-      <% end %>
+  <h4> <%= post.user.name %> </h4>
+  <%= turbo_frame_tag "edit_post" do %>
+    <%= post.body %>
+    <% if post.image.attached? %>
+      <%= image_tag post.image.variant(resize_to_limit: [600, nil]) %>
     <% end %>
-  </div>
-<% end %>
+    <% if current_user == post.user %>
+      <%= link_to "Edit", edit_post_path(post) %>
+      <%= link_to "Delete", post_path(post), data: {
+                              turbo_method: :delete,
+                              turbo_confirm: "Are you sure?" }%>
+    <% end %>
+  <% end %>
+  <% if post.liked_by?(current_user) %>
+    <% like = Like.find_by(user_id: current_user.id, likable_id: post.id, likable_type: "Post")%>
+    <%= button_to "unlike", "like/#{like.id}", method: :delete %>
+  <% else %>
+    <%= button_to "like", likes_path(likable_id: post.id, likable_type: "Post"), method: :post %>
+  <% end %>
+  <%= post.likes.count %> <%= post.likes.count == 1 ? "Like" : "Likes" %>
+  <%= turbo_frame_tag "new_comment" do %>
+    <%= link_to "Comment", new_post_comment_path(post), class: "btn btn-primary" %>
+  <% end %>
+
+  <% if post.comments.any? %>
+    <div class="container">
+      <h5> Comments </h5>
+      <% post.comments.each do |comment| %>
+        <% if comment.parent == nil %>
+          <%= render 'comments/comment', comment: comment %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
