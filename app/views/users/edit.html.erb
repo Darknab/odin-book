@@ -2,14 +2,18 @@
 
 <%= form_with model: @user do |form|%>
   <div>
-    <%= form.label :name, class: "form-label"%>
-    <%= form.text_field :name, class: "form-control", placeholder: "Your name here"%>
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Your name here" %>
   </div>
 
   <div>
-    <%= form.label :bio, class: "form-label"%>
-    <%= form.text_area :bio, class: "form-control", placeholder: "Tell us about yourself!"%>
+    <%= form.label :bio, class: "form-label" %>
+    <%= form.text_area :bio, class: "form-control", placeholder: "Tell us about yourself!" %>
   </div>
 
+  <div>
+    <%=form.label :avatar, class: "form-label" %>
+    <%= form.file_field :avatar, class: "form-control" %>
+  </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 <% end %>
