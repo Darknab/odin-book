@@ -18,6 +18,8 @@ class User < ApplicationRecord
 
   has_many :likes
 
+  has_one_attached :avatar
+
   scope :not_friends, -> (user) { where.not(id: user.friends).where.not(id: user.friendship_requests).where.not(id: user.pending_friendships).where.not(id: user) }
 
 end
