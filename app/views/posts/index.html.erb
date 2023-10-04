@@ -1,11 +1,21 @@
 <%= turbo_stream_from "posts" %>
 
-<%= turbo_frame_tag "new_post" do %>
-  <%= link_to "Create a new post", new_post_path, class: "btn btn-primary" %>
-<% end %>
+<div class="row">
+  <div class="col-sm-4">
+    <%= render "shared/menu"%>
+  </div>
 
-<% if @posts.any? %>
-  <% @posts.each do |post|%>
-    <%= render 'posts/post', post: post, user: current_user %>
-  <% end %>
-<% end %>
+  <div class="col-lg-4 col-sm-8">
+    <%= turbo_frame_tag "new_post" do %>
+      <%= link_to "Create a new post", new_post_path, class: "btn btn-primary mx-auto" %>
+    <% end %>
+    
+
+    <% if @posts.any? %>
+      <% @posts.each do |post|%>
+        <%= render 'posts/post', post: post, user: current_user %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
