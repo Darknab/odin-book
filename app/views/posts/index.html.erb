@@ -7,7 +7,9 @@
 
   <div class="col-lg-4 col-sm-8">
     <%= turbo_frame_tag "new_post" do %>
-      <%= link_to "Create a new post", new_post_path, class: "btn btn-primary mx-auto" %>
+      <div class="mb-5 text-center">
+        <%= link_to "Create a new post", new_post_path, class: "btn btn-primary" %>
+      </div>
     <% end %>
     
 
