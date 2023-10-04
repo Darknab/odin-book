@@ -10,20 +10,16 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
-      redirect_to @post
+      redirect_to post_path(@post)
     else
       render :new, status: :unpropcessable_entity
     end
   end
 
   def index
-    @user = User.find(current_user.id)
-    post_ids = @user.post_ids
-    if current_user.friends.any?
-      current_user.friends.each do |friend|
-        post_ids << friend.post_ids
-      end
-    end
+    @user = User.includes(friends: :posts).find(current_user.id)
+    friend_post_ids = @user.friends.map { |friend| friend.posts.pluck(:id) }.flatten
+    post_ids = @user.posts.pluck(:id) + friend_post_ids
     @posts = Post.find(post_ids)
   end
 
@@ -35,7 +31,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to @post
+      redirect_to post_path(@post)
     else
       render :edit, status: :unprocessable_entity
     end

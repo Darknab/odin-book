@@ -26,6 +26,6 @@
 
 <% if @user.posts.any? %>
   <% @user.posts.each do |post|%>
-    <%= render 'posts/post', post: post %>
+    <%= render 'posts/post', post: post, user: @user %>
   <% end %>
 <% end %>

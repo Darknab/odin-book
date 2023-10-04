@@ -8,15 +8,15 @@
       <% if comment.image.attached?%>
         <%= image_tag comment.image.variant(resize_to_limit: [300, nil]) %>
       <% end %>
-      <% if current_user == comment.user %>
+      <% if user == comment.user %>
         <%= link_to "Edit", "/posts/#{comment.post.id}/comments/#{comment.id}/edit" %>
         <%= link_to "Delete", "/posts/#{comment.post.id}/comments/#{comment.id}", data: {
                               turbo_method: :delete,
                               turbo_confirm: "Are you sure?" }%>
       <% end %>
     <% end %>
-    <% if comment.liked_by?(current_user) %>
-      <% like = Like.find_by(user_id: current_user.id, likable_id: comment.id, likable_id: "Comment")%>
+    <% if comment.liked_by?(user) %>
+      <% like = Like.find_by(user_id: user.id, likable_id: comment.id, likable_id: "Comment")%>
       <%= button_to "unlike", "like/#{like.id}", method: :delete %>
     <% else %>
       <%= button_to "like", likes_path(likable_id: comment.id, likable_type: "Comment"), method: :post %>
@@ -30,7 +30,7 @@
     <div class="container">
       <h6> Replies </h6>
       <% comment.replies.each do |reply| %>
-        <%= render 'replies/reply', reply: reply %>
+        <%= render 'replies/reply', reply: reply, user: user %>
       <% end %>
     </div>
   <% end %>

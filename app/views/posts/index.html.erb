@@ -1,5 +1,11 @@
+<%= turbo_stream_from "posts" %>
+
+<%= turbo_frame_tag "new_post" do %>
+  <%= link_to "Create a new post", new_post_path, class: "btn btn-primary" %>
+<% end %>
+
 <% if @posts.any? %>
   <% @posts.each do |post|%>
-    <%= render 'posts/post', post: post %>
+    <%= render 'posts/post', post: post, user: current_user %>
   <% end %>
 <% end %>
