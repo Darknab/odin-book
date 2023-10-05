@@ -1,25 +1,34 @@
-<div class="container">
-  <% if reply.user.avatar.attached? %>
-    <%= image_tag reply.user.avatar.variant(resize_to_limit: [50,50]), class:"rounded-circle" %>
-  <% end %>
-  <h6> <%= reply.user.name %> </h6>
-  <%= turbo_frame_tag "edit_reply" do %>
-      <%= reply.body %>
-      <% if reply.image.attached?%>
-        <%= image_tag reply.image.variant(resize_to_limit: [300, nil]) %>
-      <% end %>
+<div class="container d-flex flex-row">
+  <div>
+    <% if reply.user.avatar.attached? %>
+      <%= image_tag reply.user.avatar.variant(resize_to_limit: [50,50]), class:"rounded-circle" %>
+    <% end %>
+  </div>
+  <div class="ms-3">
+    <span class="h6"> <%= reply.user.name %> </span>
+    <span class="float-end">
       <% if user == reply.user %>
-        <%= link_to "Edit", "/posts/#{reply.post.id}/comments/#{reply.parent.id}/replies/#{reply.id}/edit" %>
-        <%= link_to "Delete", "/posts/#{reply.post.id}/comments/#{reply.parent.id}/replies/#{reply.id}", data: {
-                              turbo_method: :delete,
-                              turbo_confirm: "Are you sure?" }%>
+        <%= link_to inline_svg_tag("svgs/pencil.svg", size: "15px"), "/posts/#{reply.post.id}/comments/#{reply.parent.id}/replies/#{reply.id}/edit" %>
+        <%= link_to inline_svg_tag("svgs/trash-can.svg", size: "15px"), "/posts/#{reply.post.id}/comments/#{reply.parent.id}/replies/#{reply.id}", data: {
+                                turbo_method: :delete,
+                                turbo_confirm: "Are you sure?" }%>
       <% end %>
-  <% end %>
-  <% if reply.liked_by?(user) %>
-    <% like = Like.find_by(user_id: user.id, likable_id: reply.id, likable_type: "Comment")%>
-    <%= button_to "unlike", "like/#{like.id}", method: :delete %>
-  <% else %>
-    <%= button_to "like", likes_path(likable_id: reply.id, likable_type: "comment"), method: :post %>
-  <% end %>
-  <%= reply.likes.count %> <%= reply.likes.count == 1 ? "Like" : "Likes" %>
+    </span>
+    <%= turbo_frame_tag "edit_reply" do %>
+        <p><%= reply.body %></p>
+        <% if reply.image.attached?%>
+          <%= image_tag reply.image.variant(resize_to_limit: [300, nil]) %>
+        <% end %>
+
+      <% if reply.liked_by?(user) %>
+        <% like = Like.find_by(user_id: user.id, likable_id: reply.id, likable_type: "Comment")%>
+        <%= link_to inline_svg_tag("svgs/thumb-up.svg", size: "25px"), "like/#{like.id}", method: :delete %>
+      <% else %>
+        <%= link_to inline_svg_tag("svgs/thumb-up-outline.svg", size: "25px"), likes_path(likable_id: reply.id, likable_type: "comment"), method: :post %>
+      <% end %>
+      <span class="float-end">
+        <%= reply.likes.count %> <%= reply.likes.count == 1 ? "Like" : "Likes" %>
+      </span>
+    <% end %>
+  </div>
 </div>
