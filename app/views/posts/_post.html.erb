@@ -1,30 +1,38 @@
-<div class="container" >
+<div class="container bg-white rounded p-3" >
   <% if post.user.avatar.attached? %>
     <%= image_tag post.user.avatar.variant(resize_to_limit: [50,50]), class:"rounded-circle" %>
   <% end %>
-  <h4> <%= post.user.name %> </h4>
+  <span class="h4"> <%= post.user.name %> </span>
+  <span class="float-end">
+    <% if user == post.user %>
+      <%= link_to inline_svg_tag("svgs/pencil.svg", size: "15px"), edit_post_path(post) %>
+      <%= link_to inline_svg_tag("svgs/trash-can.svg", size: "15px"), post_path(post), data: {
+                                turbo_method: :delete,
+                                turbo_confirm: "Are you sure?" }%>
+    <% end %>
+  </span>
   <%= turbo_frame_tag "edit_post" do %>
-    <%= post.body %>
+    <p class="px-3" ><%= post.body %></p>
     <% if post.image.attached? %>
       <%= image_tag post.image.variant(resize_to_limit: [600, nil]) %>
     <% end %>
-    <% if user == post.user %>
-      <%= link_to "Edit", edit_post_path(post) %>
-      <%= link_to "Delete", post_path(post), data: {
-                              turbo_method: :delete,
-                              turbo_confirm: "Are you sure?" }%>
-    <% end %>
+    
+    <div>
+      <span class="text-secondary"><%= post.likes.count %> <%= post.likes.count == 1 ? "like" : "likes" %></span>
+      <span class="float-end text-secondary"><%= post.comments.count %> <%= post.comments.count == 1 ? "comment" : "comments" %></span>
+    </div>
   <% end %>
+  <hr />
   <% if post.liked_by?(user) %>
     <% like = Like.find_by(user_id: user.id, likable_id: post.id, likable_type: "Post")%>
-    <%= button_to "unlike", "like/#{like.id}", method: :delete %>
+    <%= link_to inline_svg_tag("svgs/thumb-up.svg", size: "25px"), "like/#{like.id}", method: :delete, class: "ms-5" %>
   <% else %>
-    <%= button_to "like", likes_path(likable_id: post.id, likable_type: "Post"), method: :post %>
+    <%= link_to inline_svg_tag("svgs/thumb-up-outline.svg", size: "25px"), likes_path(likable_id: post.id, likable_type: "Post"), method: :post, class: "ms-5" %>
   <% end %>
-  <%= post.likes.count %> <%= post.likes.count == 1 ? "Like" : "Likes" %>
   <%= turbo_frame_tag "new_comment" do %>
-    <%= link_to "Comment", new_post_comment_path(post), class: "btn btn-primary" %>
+    <%= link_to inline_svg("svgs/comment-outline", size: "25px"), new_post_comment_path(post), class: "float-end me-5" %>
   <% end %>
+  <hr />
 
   <% if post.comments.any? %>
     <div class="container">
