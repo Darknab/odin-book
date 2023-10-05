@@ -1,37 +1,51 @@
- <div class="container" > 
-  <% if comment.user.avatar.attached? %>
-    <%= image_tag comment.user.avatar.variant(resize_to_limit: [50,50]), class:"rounded-circle" %>
-  <% end %>
-  <h6> <%= comment.user.name %> </h6>
-  <%= turbo_frame_tag "edit_comment" do %>
-      <%= comment.body %>
-      <% if comment.image.attached?%>
-        <%= image_tag comment.image.variant(resize_to_limit: [300, nil]) %>
-      <% end %>
+ <div class="container d-flex flex-row" >
+  <div>
+    <% if comment.user.avatar.attached? %>
+      <%= image_tag comment.user.avatar.variant(resize_to_limit: [50,50]), class:"rounded-circle" %>
+    <% end %>
+  </div>
+  <div class="ms-3 ">
+    <span class="h6"> <%= comment.user.name %> </span>
+    <span class="float-end">
       <% if user == comment.user %>
-        <%= link_to "Edit", "/posts/#{comment.post.id}/comments/#{comment.id}/edit" %>
-        <%= link_to "Delete", "/posts/#{comment.post.id}/comments/#{comment.id}", data: {
-                              turbo_method: :delete,
-                              turbo_confirm: "Are you sure?" }%>
+        <%= link_to inline_svg_tag("svgs/pencil.svg", size: "15px"), "/posts/#{comment.post.id}/comments/#{comment.id}/edit" %>
+        <%= link_to inline_svg_tag("svgs/trash-can.svg", size: "15px"), "/posts/#{comment.post.id}/comments/#{comment.id}", data: {
+                                    turbo_method: :delete,
+                                    turbo_confirm: "Are you sure?" }%>
       <% end %>
-    <% end %>
-    <% if comment.liked_by?(user) %>
-      <% like = Like.find_by(user_id: user.id, likable_id: comment.id, likable_id: "Comment")%>
-      <%= button_to "unlike", "like/#{like.id}", method: :delete %>
-    <% else %>
-      <%= button_to "like", likes_path(likable_id: comment.id, likable_type: "Comment"), method: :post %>
-    <% end %>
-    <%= comment.likes.count %> <%= comment.likes.count == 1 ? "Like" : "Likes" %>
-  <%= turbo_frame_tag "new_reply" do %>
-    <%= link_to "reply", new_post_comment_reply_path(comment.post, comment, parent_id: comment.id), class: "btn btn-primary" %>
-  <% end %>
-
-  <% if comment.replies.any? %>
-    <div class="container">
-      <h6> Replies </h6>
-      <% comment.replies.each do |reply| %>
-        <%= render 'replies/reply', reply: reply, user: user %>
+    </span>
+    <%= turbo_frame_tag "edit_comment" do %>
+        <div class="bg-light">
+          <p><%= comment.body %></p>
+          <% if comment.image.attached?%>
+            <%= image_tag comment.image.variant(resize_to_limit: [300, nil]) %>
+          <% end %>
+        </div>
+        <% if comment.liked_by?(user) %>
+          <% like = Like.find_by(user_id: user.id, likable_id: comment.id, likable_id: "Comment")%>
+          <%= link_to inline_svg_tag("svgs/thumb-up.svg", size: "25px"), "like/#{like.id}", method: :delete %>
+        <% else %>
+          <%= link_to inline_svg_tag("svgs/thumb-up-outline.svg", size: "25px"), likes_path(likable_id: comment.id, likable_type: "Comment"), method: :post %>
+        <% end %>
+        <span class="float-end">
+          <%= comment.likes.count %> <%= comment.likes.count == 1 ? "like" : "likes" %>
+          <%= comment.replies.count %> <%= comment.replies.count == 1 ? "reply" : "replies" %>
+        </span>
+        
+      <% end %>
+    <div>  
+      <%= turbo_frame_tag "new_reply" do %>
+        <%= link_to "reply", new_post_comment_reply_path(comment.post, comment, parent_id: comment.id), class: "text-decoration-none text-secondary" %>
       <% end %>
     </div>
-  <% end %>
+
+    <% if comment.replies.any? %>
+      <div class="container">
+        <h6> Replies </h6>
+        <% comment.replies.each do |reply| %>
+          <%= render 'replies/reply', reply: reply, user: user %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
