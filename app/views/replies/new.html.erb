@@ -11,17 +11,22 @@
     </div>
   <% end %>
   <%= form_with model: [@post, @parent], url: post_comment_replies_path(@post, @comment, comment_id: params[:comment_id]), method: :post do |form| %>
-    <div>
+    <div class="d-block input-group bg-light-blue border">
       <%= form.hidden_field :parent_id, value: params[:parent_id] %>
-      <%= form.label :body %>
-      <%= form.text_area :body %>
-    </div>
-    <div>
-      <%= form.label :image %>
-      <%= form.file_field :image%>
-    </div>
-    <div>
-      <%= form.submit "submit" %>
+      <div>
+        <%= form.text_area :body, class: "form-control bg-light-blue border-none" %>
+      </div>
+      <div>
+        <label for="image-upload">
+          <span role="button" class="ms-4"> <%= inline_svg_tag("svgs/image.svg", size: "24px") %></span>
+        </label>
+        <%= form.file_field :image, id: "image-upload", class: "d-none" %>
+
+        <span class="float-end me-4">
+          <%= form.button(type: 'submit', class: "btn btn-link p-0") do %>
+            <%= inline_svg_tag('svgs/send.svg', size: '24px') %>
+          <% end %>
+        </span>
     </div>
   <% end %>
 <% end %>
