@@ -4,7 +4,7 @@
       <%= image_tag comment.user.avatar.variant(resize_to_limit: [50,50]), class:"rounded-circle" %>
     <% end %>
   </div>
-  <div class="ms-3 ">
+  <div class="ms-3 flex-grow-1">
     <span class="h6"> <%= comment.user.name %> </span>
     <span class="float-end">
       <% if user == comment.user %>
@@ -15,10 +15,10 @@
       <% end %>
     </span>
     <%= turbo_frame_tag "edit_comment" do %>
-        <div class="bg-light">
+        <div class="bg-light-blue rounded p-1">
           <p><%= comment.body %></p>
           <% if comment.image.attached?%>
-            <%= image_tag comment.image.variant(resize_to_limit: [300, nil]) %>
+            <%= image_tag comment.image.variant(resize_to_limit: [300, nil]), class: "mx-auto d-block rounded" %>
           <% end %>
         </div>
         <% if comment.liked_by?(user) %>
